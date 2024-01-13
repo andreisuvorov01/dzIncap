@@ -1,0 +1,7 @@
+C:\Users\Professional\source\repos\dz3_2\dz3_2\bin\Debug\dz3_2.exe.config
+C:\Users\Professional\source\repos\dz3_2\dz3_2\bin\Debug\dz3_2.exe
+C:\Users\Professional\source\repos\dz3_2\dz3_2\bin\Debug\dz3_2.pdb
+C:\Users\Professional\source\repos\dz3_2\dz3_2\obj\Debug\dz3_2.csproj.AssemblyReference.cache
+C:\Users\Professional\source\repos\dz3_2\dz3_2\obj\Debug\dz3_2.csproj.CoreCompileInputs.cache
+C:\Users\Professional\source\repos\dz3_2\dz3_2\obj\Debug\dz3_2.exe
+C:\Users\Professional\source\repos\dz3_2\dz3_2\obj\Debug\dz3_2.pdb
