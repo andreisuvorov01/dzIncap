@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace ConsoleGame
 {
@@ -16,7 +17,6 @@ namespace ConsoleGame
                 Console.WriteLine("\nчто вы собираетесь делать?");
                 Console.WriteLine("1.выбрать с кем сразиться");
                 Console.WriteLine("2.выйти");
-
                 int choice = int.Parse(Console.ReadLine());
 
                 switch (choice)
@@ -33,10 +33,12 @@ namespace ConsoleGame
                             player.LevelUp();
                         }
                         break;
+
                     case 2:
                         Console.Clear();
                         Console.WriteLine("выход из игры...");
                         return;
+
                     default:
                         Console.Clear();
                         Console.WriteLine("такого варианта нет(.");
@@ -49,11 +51,11 @@ namespace ConsoleGame
         {
             List<Enemy> enemies = new List<Enemy>();
             Random random = new Random();
-            int numOfEnemies = random.Next(3, 6); 
+            int numOfEnemies = random.Next(3, 6);
 
             for (int i = 0; i < numOfEnemies; i++)
             {
-                int enemyLevel = random.Next(1, 10); 
+                int enemyLevel = random.Next(1, 10);
                 Enemy enemy = new Enemy("враг " + (i + 1), enemyLevel);
                 enemies.Add(enemy);
             }
@@ -64,8 +66,8 @@ namespace ConsoleGame
         static Enemy SelectEnemy()
         {
             List<Enemy> enemies = GenerateEnemies();
-
             Console.WriteLine("\nкого вызвать на дуэль?");
+
             for (int i = 0; i < enemies.Count; i++)
             {
                 Console.WriteLine((i + 1) + ". " + enemies[i].GetStats());
@@ -79,7 +81,10 @@ namespace ConsoleGame
         {
             while (true)
             {
-                enemy.TakeDamage(player.Attack());
+                // Атака игрока
+                int playerAttackDamage = player.Attack();
+                enemy.TakeDamage(playerAttackDamage);
+                DisplayBattleInfo(player, enemy, playerAttackDamage);
 
                 if (enemy.IsDead())
                 {
@@ -88,14 +93,28 @@ namespace ConsoleGame
                     return new BattleResult(true, "вы победили " + enemy.GetName() + "!");
                 }
 
-                player.TakeDamage(enemy.Attack());
+                // Атака врага
+                int enemyAttackDamage = enemy.Attack();
+                player.TakeDamage(enemyAttackDamage);
+                DisplayBattleInfo(player, enemy, enemyAttackDamage);
 
                 if (player.IsDead())
                 {
                     Console.Clear();
                     return new BattleResult(false, "вас убил " + enemy.GetName() + "(");
                 }
+
+               
             }
+        }
+
+        static void DisplayBattleInfo(Player player, Enemy enemy, int damage)
+        {
+            Console.WriteLine($"Текущее здоровье игрока: {player.GetStats()}");
+            Console.WriteLine($"Текущее здоровье врага {enemy.GetName()}: {enemy.GetStats()}");
+            Console.WriteLine($"Нанесенный урон: {damage}\n");
+            Thread.Sleep(3000);
+            Console.Clear();
         }
     }
 
